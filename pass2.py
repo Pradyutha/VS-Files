@@ -1,36 +1,40 @@
 import csv
 import getpass
+global_store_file_name = "pass.txt"
+global_super_password = "123"
+
 def getMe():
-        f = "pass.txt"
-        pw = "123"    
         inp = getpass.getpass()
-        if inp == pw :
+        if inp == global_super_password:
             print("Success")
-            print("------------------------") 
-            return
+            print("------------------------")
         else:
-            print("Access Denied") 
-            return
+            print("Access Denied")
+            raise Exception("Password not recognized, you may not proceed")
         
-def find(): 
-        user = input("Enter username:")  
-        file = open("pass.txt" , "r") 
-        file.reader = csv.reader(file)
-        temp = []
-        return
+def find():
+        user = input("Enter username:")
+        try:
+            file = open(global_store_file_name , "r")
+            file.reader = csv.reader(file)
+            temp = []
+        except Exception as error:
+            print("Exception while trying to open and read file %s"%str(error))
+            raise Exception(error)
         
 def read(file):
-    
-        file = open("pass.txt" , "r")
+        file = open(global_store_file_name, "r")
         for row in file:
             if row[0] == user :
-                print("the password for this ID is: " , row[1] )
-                return
+                print("the password for this ID is: " , row[1])
             else:
-                print("The ID does not exist") 
-                return   
+                print("The ID does not exist")
+
 def main():
-    getMe()
-    find()
-    read(file)
+    try:
+        getMe()
+        find()
+        read(file)
+    except Exception as error:
+        print("Couldn't complete execution of program as we had the following error - %s"%str(error))
 main()
