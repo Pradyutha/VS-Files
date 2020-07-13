@@ -1,8 +1,19 @@
+import sys
 import csv
 import getpass
+import argparse
+
 global_store_file_name = "pass.txt"
 global_super_password = "123"
 
+def print_usage():
+        print("Usage of this tool - ")
+        print(" Pass the location of the text file or create-new")
+        print("     Example - pass2.py --dir=<Location of file> or --New")
+
+def parse_arguments():
+        print("Pradyu to try parsing arguments")
+    
 def getMe():
         inp = getpass.getpass()
         if inp == global_super_password:
@@ -30,11 +41,16 @@ def read(file):
             else:
                 print("The ID does not exist")
 
-def main():
+if __name__ == "__main__":
+    if len(sys.argv) <= 1:
+        print("Invalid number of arguments")
+        print_usage()
+        sys.exit()
+    
     try:
+        parse_arguments()
         getMe()
         find()
         read(file)
     except Exception as error:
         print("Couldn't complete execution of program as we had the following error - %s"%str(error))
-main()
